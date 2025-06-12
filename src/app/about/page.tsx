@@ -62,7 +62,7 @@ export default function AboutPage() {
             >
               <div className="relative w-48 h-48 mb-6 rounded-full overflow-hidden border-4 border-brand-turquoise shadow-lg">
                 <Image
-                  src="/images/mohammed-lashkaria.jpg"
+                  src="/images/mohammed.jpg"
                   alt="Mohammed Lashkaria"
                   fill
                   className="object-cover"

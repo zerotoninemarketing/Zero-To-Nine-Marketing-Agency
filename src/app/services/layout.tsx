@@ -52,7 +52,8 @@ export default function ServicesLayout({
     <div className="min-h-screen bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
         <div className="lg:grid lg:grid-cols-12 lg:gap-8">
-          {/* Left Side - Service Navigation */}
+          {/* Service Navigation - Responsive */}
+          {/* Desktop Sidebar */}
           <div className="hidden lg:block lg:col-span-3">
             <div className="sticky top-8">
               <div className="space-y-1">
@@ -100,6 +101,28 @@ export default function ServicesLayout({
                     </Link>
                   )
                 })}
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile Navigation */}
+          <div className="block lg:hidden mb-6">
+            <div className="overflow-x-auto">
+              <div className="flex gap-4 min-w-max">
+                {services.map((service) => (
+                  <Link
+                    key={service.name}
+                    href={service.href}
+                    className="flex flex-col items-center bg-gray-50 rounded-lg p-3 min-w-[160px] shadow-sm border hover:bg-gray-100 transition-colors"
+                  >
+                    <div className={`rounded-full p-2 mb-2 ${service.color}`}>
+                      {React.createElement(service.icon, { className: 'h-6 w-6 text-white' })}
+                    </div>
+                    <span className="font-semibold text-gray-900 text-sm text-center">{service.name}</span>
+                    <span className="text-lg font-bold mt-1" style={{ color: service.color }}>{service.stats.value}</span>
+                    <span className="text-xs text-gray-500">{service.stats.label}</span>
+                  </Link>
+                ))}
               </div>
             </div>
           </div>

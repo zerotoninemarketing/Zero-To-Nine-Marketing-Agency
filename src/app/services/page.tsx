@@ -117,6 +117,20 @@ export default function ServicesPage() {
               </BarChart>
             </ResponsiveContainer>
           </div>
+
+          {/* Responsive Service List for Mobile */}
+          <div className="block lg:hidden mt-8">
+            <div className="overflow-x-auto">
+              <div className="flex gap-4 min-w-max">
+                {services.map((service) => (
+                  <div key={service.name} className="flex flex-col items-center bg-gray-50 rounded-lg p-3 min-w-[140px] shadow-sm border">
+                    <span className="font-semibold text-gray-900 text-sm text-center">{service.name}</span>
+                    <span className="text-lg font-bold mt-2" style={{ color: service.color }}>{service.revenue} Cr</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
