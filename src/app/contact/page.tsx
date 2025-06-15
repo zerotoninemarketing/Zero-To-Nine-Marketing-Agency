@@ -1,58 +1,6 @@
 'use client'
 
-import { useState } from 'react'
-import { submitContactForm } from './actions'
-
-interface FormStatus {
-  type: 'success' | 'error' | null
-  message: string
-}
-
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    countryCode: '+91',
-    phone: '',
-    requirements: ''
-  })
-
-  const [status, setStatus] = useState<FormStatus>({
-    type: null,
-    message: ''
-  })
-
-  const [isSubmitting, setIsSubmitting] = useState(false)
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    setStatus({ type: null, message: '' })
-
-    try {
-      const result = await submitContactForm(formData)
-      if (result.success) {
-        setStatus({ type: 'success', message: result.message })
-        setFormData({
-          name: '',
-          email: '',
-          countryCode: '+91',
-          phone: '',
-          requirements: ''
-        })
-      } else {
-        setStatus({ type: 'error', message: result.message })
-      }
-    } catch (error) {
-      setStatus({
-        type: 'error',
-        message: 'There was an error submitting your message. Please try again.'
-      })
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
-
   return (
     <div className="min-h-screen bg-gray-50 py-6">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -70,28 +18,21 @@ export default function ContactPage() {
         </div>
 
         <div className="bg-white rounded-lg shadow-lg p-6">
-          {status.type && (
-            <div
-              className={`mb-6 p-4 rounded-md ${
-                status.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'
-              }`}
-            >
-              {status.message}
-            </div>
-          )}
-
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form
+            action="https://formspree.io/f/xblyyyor"  // 🔁 Replace this with your real Formspree form ID
+            method="POST"
+            className="space-y-6"
+          >
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                 Name
               </label>
               <input
                 type="text"
+                name="name"
                 id="name"
                 required
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               />
             </div>
 
@@ -101,11 +42,10 @@ export default function ContactPage() {
               </label>
               <input
                 type="email"
+                name="email"
                 id="email"
                 required
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               />
             </div>
 
@@ -115,11 +55,10 @@ export default function ContactPage() {
                   Country Code
                 </label>
                 <select
+                  name="countryCode"
                   id="countryCode"
                   required
                   className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                  value={formData.countryCode}
-                  onChange={(e) => setFormData({ ...formData, countryCode: e.target.value })}
                 >
                   <option value="+91">India (+91)</option>
                   <option value="+1">USA/Canada (+1)</option>
@@ -136,11 +75,10 @@ export default function ContactPage() {
                 </label>
                 <input
                   type="tel"
+                  name="phone"
                   id="phone"
                   required
                   className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 />
               </div>
             </div>
@@ -150,25 +88,24 @@ export default function ContactPage() {
                 Requirements
               </label>
               <textarea
+                name="requirements"
                 id="requirements"
                 rows={4}
                 required
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                value={formData.requirements}
-                onChange={(e) => setFormData({ ...formData, requirements: e.target.value })}
                 placeholder="Please describe your requirements..."
-              />
+              ></textarea>
             </div>
+
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_next" value="https://yourdomain.com/thank-you" /> {/* Optional */}
 
             <div>
               <button
                 type="submit"
-                disabled={isSubmitting}
-                className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${
-                  isSubmitting ? 'opacity-75 cursor-not-allowed' : ''
-                }`}
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
               >
-                {isSubmitting ? 'Sending...' : 'Send Message'}
+                Send Message
               </button>
             </div>
           </form>
@@ -176,4 +113,4 @@ export default function ContactPage() {
       </div>
     </div>
   )
-} 
+}
