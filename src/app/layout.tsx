@@ -10,8 +10,8 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Digital Marketing Agency | Performance Marketing & SEO Services',
-  description: 'Professional digital marketing services including SEO, content marketing, social media automation, and performance marketing. Get your free marketing audit today.',
+  title: 'Zero to Nine',
+  description: 'Your digital growth partner – Zero to Nine Marketing',
 }
 
 export default function RootLayout({
