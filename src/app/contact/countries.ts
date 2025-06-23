@@ -54,5 +54,20 @@ export const countries: Country[] = [
     name: "France",
     dial_code: "+33",
     code: "FR"
+  },
+  {
+    name: "Oman",
+    dial_code: "+968",
+    code: "OM"
+  },
+  {
+    name: "Bangladesh",
+    dial_code: "+880",
+    code: "BD"
+  },
+  {
+    name: "Custom/Other",
+    dial_code: "custom",
+    code: "OTHER"
   }
 ] 

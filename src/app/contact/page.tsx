@@ -59,15 +59,35 @@ export default function ContactPage() {
                   id="countryCode"
                   required
                   className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  onChange={(e) => {
+                    const customInput = document.getElementById('custom-country-code-input');
+                    if (e.target.value === 'custom') {
+                      customInput?.classList.remove('hidden');
+                      customInput?.setAttribute('required', 'true');
+                    } else {
+                      customInput?.classList.add('hidden');
+                      customInput?.removeAttribute('required');
+                    }
+                  }}
                 >
                   <option value="+91">India (+91)</option>
                   <option value="+1">USA/Canada (+1)</option>
                   <option value="+44">UK (+44)</option>
                   <option value="+61">Australia (+61)</option>
                   <option value="+971">UAE (+971)</option>
+                  <option value="+968">Oman (+968)</option>
+                  <option value="+880">Bangladesh (+880)</option>
                   <option value="+65">Singapore (+65)</option>
                   <option value="+966">Saudi Arabia (+966)</option>
+                  <option value="custom">Other (Enter Manually)</option>
                 </select>
+                <input
+                  type="text"
+                  name="customCountryCode"
+                  id="custom-country-code-input"
+                  placeholder="Enter your country code (e.g. +123)"
+                  className="mt-2 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 hidden"
+                />
               </div>
               <div className="col-span-2">
                 <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
@@ -91,14 +111,13 @@ export default function ContactPage() {
                 name="requirements"
                 id="requirements"
                 rows={4}
-                required
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                 placeholder="Please describe your requirements..."
               ></textarea>
             </div>
 
             <input type="hidden" name="_captcha" value="false" />
-            <input type="hidden" name="_next" value="https://yourdomain.com/thank-you" /> {/* Optional */}
+            <input type="hidden" name="_next" value="/thank-you" />
 
             <div>
               <button
