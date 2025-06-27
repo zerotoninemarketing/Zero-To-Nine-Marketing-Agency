@@ -50,7 +50,16 @@ export default async function BlogPage() {
       {/* Blog Posts Grid */}
       <div className="mx-auto max-w-7xl px-6 lg:px-8 pb-24">
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-          {posts.map((post) => (
+          {posts.map((post: {
+            _id: string;
+            title: string;
+            slug: string;
+            publishedAt: string;
+            category?: string;
+            excerpt?: string;
+            mainImage?: string;
+            readTime?: string;
+          }) => (
             <article key={post._id} className="flex flex-col items-start">
               <Link href={`/blog/${post.slug}`} className="relative w-full">
                 <div className="aspect-[16/9] w-full rounded-2xl bg-gray-100 overflow-hidden">
