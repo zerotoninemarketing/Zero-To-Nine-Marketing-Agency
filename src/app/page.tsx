@@ -18,8 +18,8 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-[#5ce1e6] to-[#0099f1]">
-                Transform Your Digital Presence
+              <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
+                <span className="text-brand-blue">Transform your</span> <span className="text-gray-900">Digital Presence</span>
               </h1>
               <p className="mt-6 text-lg leading-8 text-gray-600">
                 Zero To Nine Marketing & Consultancy helps businesses achieve exceptional growth through data-driven strategies and innovative solutions.
