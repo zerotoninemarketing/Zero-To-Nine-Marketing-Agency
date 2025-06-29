@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
             ph: user.phone ? [user.phone] : undefined,
             fbc: req.cookies.get('_fbc')?.value,
             fbp: req.cookies.get('_fbp')?.value,
-            client_ip_address: req.ip,
+            client_ip_address: req.headers.get('x-forwarded-for')?.split(',')[0] || req.headers.get('x-real-ip') || 'unknown',
             client_user_agent: req.headers.get('user-agent'),
         },
         custom_data: customData,
