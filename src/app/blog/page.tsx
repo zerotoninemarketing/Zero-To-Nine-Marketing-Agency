@@ -1,12 +1,32 @@
 import { wpClient } from '../../lib/wpClient';
 import { GET_POSTS } from '../../lib/queries';
 
+interface PostNode {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  date: string;
+  featuredImage?: {
+    node: {
+      sourceUrl: string;
+      altText: string;
+    }
+  }
+}
+
+interface PostsData {
+  posts: {
+    nodes: PostNode[];
+  }
+}
+
 export default async function BlogPage() {
-  let posts = [];
+  let posts: PostNode[] = [];
   let errorInfo = null;
 
   try {
-    const data = await wpClient.request(GET_POSTS);
+    const data = await wpClient.request(GET_POSTS) as { posts: { nodes: PostNode[] } };
     posts = data.posts.nodes;
   } catch (error: any) {
     errorInfo = {
@@ -41,7 +61,7 @@ export default async function BlogPage() {
             <div className="blog-card coming-soon">Coming Soon</div>
           </>
         )}
-        {posts.map((post: any) => (
+        {posts.map((post) => (
           <div className="blog-card" key={post.id}>
             {post.featuredImage?.node?.sourceUrl && (
               <img
