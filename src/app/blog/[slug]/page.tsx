@@ -4,11 +4,7 @@
 import { wpClient } from '../../../lib/wpClient';
 import { GET_POST_BY_SLUG } from '../../../lib/queries';
 
-interface Props {
-  params: { slug: string };
-}
-
-export default async function BlogPostPage({ params }: Props) {
+export default async function BlogPostPage({ params }: { params: { slug: string } }) {
   const data = await wpClient.request(GET_POST_BY_SLUG, { slug: params.slug });
   const post = data.post;
 
