@@ -83,7 +83,7 @@ The website includes automatic sitemap generation and robots.txt files for bette
 Add these to your `.env.local` file:
 
 \`\`\`bash
-NEXT_PUBLIC_SITE_URL=https://yourdomain.com
+NEXT_PUBLIC_SITE_URL=https://www.zerotoninemarketing.com
 WORDPRESS_API_URL=https://your-wordpress-site.com/graphql
 \`\`\`
 

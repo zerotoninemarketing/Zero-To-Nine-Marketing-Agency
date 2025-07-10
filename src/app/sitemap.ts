@@ -36,7 +36,7 @@ async function getBlogPosts(): Promise<WordPressPost[]> {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com'
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.zerotoninemarketing.com'
   
   // Static routes
   const staticRoutes = [
