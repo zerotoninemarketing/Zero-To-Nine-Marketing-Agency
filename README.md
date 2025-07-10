@@ -69,6 +69,24 @@ npm run dev
 - `/src/lib` - Utility functions and API handlers
 - `/src/styles` - Global styles and Tailwind configuration
 
+## SEO and Sitemap
+
+The website includes automatic sitemap generation and robots.txt files for better SEO:
+
+- **Sitemap**: Automatically generated at `/sitemap.xml` with all static routes and blog posts
+- **Robots.txt**: Available at `/robots.txt` with proper crawling rules
+- **Blog Integration**: Automatically includes all WordPress blog posts in the sitemap
+- **Environment Variables**: Set `NEXT_PUBLIC_SITE_URL` and `WORDPRESS_API_URL` in your environment variables
+
+### Environment Variables for SEO
+
+Add these to your `.env.local` file:
+
+\`\`\`bash
+NEXT_PUBLIC_SITE_URL=https://yourdomain.com
+WORDPRESS_API_URL=https://your-wordpress-site.com/graphql
+\`\`\`
+
 ## Contributing
 
 1. Fork the repository
