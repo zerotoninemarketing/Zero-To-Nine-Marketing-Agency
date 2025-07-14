@@ -5,12 +5,20 @@ export const GET_POSTS = `
         id
         title
         slug
-        excerpt
         date
         featuredImage {
           node {
             sourceUrl
             altText
+          }
+        }
+        seo {
+          title
+          metaDesc
+          opengraphTitle
+          opengraphDescription
+          opengraphImage {
+            sourceUrl
           }
         }
       }
@@ -30,6 +38,24 @@ export const GET_POST_BY_SLUG = `
           sourceUrl
           altText
         }
+      }
+      seo {
+        title
+        metaDesc
+        opengraphTitle
+        opengraphDescription
+        opengraphImage {
+          sourceUrl
+        }
+        twitterTitle
+        twitterDescription
+        twitterImage {
+          sourceUrl
+        }
+        canonical
+        focuskw
+        metaRobotsNoindex
+        metaRobotsNofollow
       }
     }
   }

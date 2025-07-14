@@ -1,16 +1,25 @@
 import { wpClient } from '../../lib/wpClient';
 import { GET_POSTS } from '../../lib/queries';
+import { Metadata } from 'next';
 
 interface PostNode {
   id: string;
   title: string;
   slug: string;
-  excerpt: string;
   date: string;
   featuredImage?: {
     node: {
       sourceUrl: string;
       altText: string;
+    }
+  }
+  seo?: {
+    title: string;
+    metaDesc: string;
+    opengraphTitle: string;
+    opengraphDescription: string;
+    opengraphImage?: {
+      sourceUrl: string;
     }
   }
 }
@@ -20,6 +29,21 @@ interface PostsData {
     nodes: PostNode[];
   }
 }
+
+export const metadata: Metadata = {
+  title: 'Blog - Marketing Insights & Strategies | Zero Tonic Marketing',
+  description: 'Expert perspectives, actionable tips, and the latest trends in digital marketing to help grow your business.',
+  openGraph: {
+    title: 'Blog - Marketing Insights & Strategies',
+    description: 'Expert perspectives, actionable tips, and the latest trends in digital marketing to help grow your business.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Blog - Marketing Insights & Strategies',
+    description: 'Expert perspectives, actionable tips, and the latest trends in digital marketing to help grow your business.',
+  },
+};
 
 export default async function BlogPage() {
   let posts: PostNode[] = [];
@@ -78,10 +102,6 @@ export default async function BlogPage() {
             <a href={`/blog/${post.slug}`} className="blog-title">
               {post.title}
             </a>
-            { <div
-              className="blog-excerpt"
-              dangerouslySetInnerHTML={{ __html: post.excerpt }}
-            /> }
           </div>
         ))}
       </div>
