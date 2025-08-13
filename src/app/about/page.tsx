@@ -242,6 +242,145 @@ export default function AboutPage() {
         </div>
       </div>
 
+      {/* Client Testimonials Section */}
+      <div className="bg-gray-50 py-24">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            variants={fadeIn}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl mb-4">
+              What Our Clients Say
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Real testimonials from businesses we've helped transform and grow.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+            {[
+              {
+                name: 'Curvylane Team',
+                role: 'Founders',
+                company: 'Fashion E-commerce',
+                content: 'Zero To Nine transformed our brand from a startup to a recognized fashion destination. Their comprehensive marketing approach helped us establish a strong online presence and achieve consistent sales growth.',
+                image: '/images/testimonial1.jpg',
+                rating: 5,
+                results: ['467% Sales Increase', '8 Months Timeline']
+              },
+              {
+                name: 'Boketto Management',
+                role: 'Restaurant Owners',
+                company: 'Food & Beverage',
+                content: 'Zero To Nine helped us dominate local search results and significantly increase our online orders. Our restaurants are now the go-to choice for food lovers in the area.',
+                image: '/images/testimonial2.jpg',
+                rating: 5,
+                results: ['380% Order Increase', '6 Months Timeline']
+              },
+              {
+                name: 'Caro Jewels Team',
+                role: 'Brand Managers',
+                company: 'Luxury Jewelry',
+                content: 'Zero To Nine helped us position our brand as a premium jewelry destination. Their luxury marketing approach and influencer partnerships have significantly increased our customer value.',
+                image: '/images/testimonial3.jpg',
+                rating: 5,
+                results: ['213% Order Value Increase', '7 Months Timeline']
+              }
+            ].map((testimonial, index) => (
+              <motion.div
+                key={testimonial.name}
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+                variants={fadeIn}
+                transition={{ delay: index * 0.2 }}
+                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300"
+              >
+                <div className="flex items-center mb-6">
+                  <div className="w-16 h-16 bg-gradient-to-r from-brand-turquoise to-brand-blue rounded-full flex items-center justify-center text-white font-bold text-xl">
+                    {testimonial.name.charAt(0)}
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="font-semibold text-gray-900 text-lg">{testimonial.name}</h3>
+                    <p className="text-brand-blue font-medium">{testimonial.role}</p>
+                    <p className="text-sm text-gray-600">{testimonial.company}</p>
+                  </div>
+                </div>
+                
+                <div className="flex mb-4">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+                
+                <blockquote className="text-gray-600 italic mb-6 leading-relaxed">
+                  "{testimonial.content}"
+                </blockquote>
+                
+                <div className="border-t pt-4">
+                  <div className="flex flex-wrap gap-2">
+                    {testimonial.results.map((result) => (
+                      <span key={result} className="bg-gradient-to-r from-brand-turquoise to-brand-blue text-white text-xs px-3 py-1 rounded-full font-medium">
+                        {result}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Partners Section */}
+      <div className="bg-white py-24">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            variants={fadeIn}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl mb-4">
+              Our Partners & Certifications
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              We work with industry leaders and maintain the highest standards of excellence.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center justify-items-center">
+            {[
+              { name: 'Meta Business Partner', logo: '/images/meta-partner.png' },
+              { name: 'Google Partner', logo: '/images/google-partner.png' },
+              { name: 'LinkedIn Partner', logo: '/images/linkedin-partner.png' },
+              { name: 'TikTok Partner', logo: '/images/tiktok-partner.png' },
+              { name: 'HubSpot Partner', logo: '/images/hubspot-partner.png' },
+              { name: 'Shopify Partner', logo: '/images/shopify-partner.png' },
+            ].map((partner) => (
+              <motion.div
+                key={partner.name}
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+                variants={fadeIn}
+                className="flex items-center justify-center h-16 w-32 opacity-60 hover:opacity-100 transition-opacity duration-300"
+              >
+                <div className="text-gray-400 text-sm font-medium border border-gray-200 rounded-lg px-4 py-2 bg-gray-50 text-center">
+                  {partner.name}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* CEO Quote */}
       <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
         <motion.div
