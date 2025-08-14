@@ -4,6 +4,9 @@
 import { wpClient } from '../../../lib/wpClient';
 import { GET_POST_BY_SLUG } from '../../../lib/queries';
 
+// Revalidate individual posts periodically
+export const revalidate = 60; // seconds
+
 interface PostData {
   post: {
     id: string;

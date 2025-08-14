@@ -2,6 +2,9 @@ import { wpClient } from '../../lib/wpClient';
 import { GET_POSTS } from '../../lib/queries';
 import { Metadata } from 'next';
 
+// Revalidate the blog listing periodically so new posts appear without a redeploy
+export const revalidate = 300; // seconds
+
 interface PostNode {
   id: string;
   title: string;
