@@ -80,6 +80,16 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    transition: all 0.3s ease;
+  }
+  .blog-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .blog-card-link:hover .blog-card {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
   }
   .coming-soon {
     background: #f5f7fa;

@@ -2,7 +2,7 @@
 // Blog functionality will be handled by WordPress
 
 import { wpClient } from '../../../lib/wpClient';
-import { GET_POST_BY_SLUG } from '../../../lib/queries';
+import { GET_POST_BY_SLUG, GET_POST_SLUGS, GET_POST_SEO_BY_SLUG } from '../../../lib/queries';
 
 // Revalidate individual posts periodically
 export const revalidate = 60; // seconds
@@ -40,9 +40,35 @@ interface PostData {
   }
 }
 
+interface PostSeoData {
+  post: {
+    title: string;
+    seo?: {
+      title?: string;
+      metaDesc?: string;
+      opengraphTitle?: string;
+      opengraphDescription?: string;
+      opengraphImage?: { sourceUrl: string };
+      twitterTitle?: string;
+      twitterDescription?: string;
+      twitterImage?: { sourceUrl: string };
+      canonical?: string;
+    }
+  }
+}
+
+export async function generateStaticParams() {
+  try {
+    const data = await wpClient.request(GET_POST_SLUGS) as { posts: { nodes: { slug: string }[] } };
+    return data.posts.nodes.map((n) => ({ slug: n.slug }));
+  } catch {
+    return [] as { slug: string }[];
+  }
+}
+
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   try {
-    const data = await wpClient.request(GET_POST_BY_SLUG, { slug: params.slug }) as PostData;
+    const data = await wpClient.request(GET_POST_SEO_BY_SLUG, { slug: params.slug }) as PostSeoData;
     const post = data.post;
 
     if (!post) {
@@ -79,17 +105,32 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 }
 
+function enhancePostHtml(html: string): string {
+  let transformed = html;
+  // Lazy-load images if not already specified
+  transformed = transformed.replace(/<img\b(?![^>]*\bloading=)[^>]*>/gi, (match) =>
+    match.replace('<img', '<img loading="lazy" decoding="async" fetchpriority="low"')
+  );
+  // Lazy-load iframes
+  transformed = transformed.replace(/<iframe\b(?![^>]*\bloading=)[^>]*>/gi, (match) =>
+    match.replace('<iframe', '<iframe loading="lazy"')
+  );
+  return transformed;
+}
+
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
   const data = await wpClient.request(GET_POST_BY_SLUG, { slug: params.slug }) as PostData;
   const post = data.post;
 
   if (!post) return <div>Post not found</div>;
 
+  const optimizedHtml = enhancePostHtml(post.content);
+
   return (
     <div className="blog-post-layout" style={{ display: 'flex', gap: '2rem' }}>
       <main className="blog-main-content" style={{ flex: 3 }}>
         <h1 className="blog-title-h1">{post.title}</h1>
-        <div className="blog-content" dangerouslySetInnerHTML={{ __html: post.content }} />
+        <div className="blog-content" dangerouslySetInnerHTML={{ __html: optimizedHtml }} />
         <p>
           <em>Published on {new Date(post.date).toLocaleDateString()}</em>
         </p>

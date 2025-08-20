@@ -52,13 +52,13 @@ export default function AboutPage() {
           </motion.div>
           
           <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:gap-16">
-            {/* Mohammed Lashkaria */}
+            {/* Mohammed Lashkaria - Centered */}
             <motion.div
               initial="initial"
               whileInView="animate"
               viewport={{ once: true }}
               variants={fadeIn}
-              className="flex flex-col items-center"
+              className="flex flex-col items-center justify-center"
             >
               <div className="relative w-48 h-48 mb-6 rounded-full overflow-hidden border-4 border-brand-turquoise shadow-lg">
                 <Image
@@ -70,38 +70,55 @@ export default function AboutPage() {
                 />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-2">Mohammed Lashkaria</h3>
-              <p className="text-brand-blue font-semibold mb-4">CEO & Co-founder</p>
+              <p className="text-brand-blue font-semibold mb-4">CEO & Founder</p>
               <p className="text-gray-600 text-center max-w-md">
                 A visionary leader with extensive experience in digital growth and scaling businesses.
-                Mohammed's expertise in strategic marketing has helped numerous businesses achieve 
+                Mohammed's expertise in strategic marketing and AI-SEO has helped numerous businesses achieve 
                 remarkable online success.
               </p>
             </motion.div>
 
-            {/* Mo. Faeem Lashkaria */}
+            {/* AI-SEO Expertise Section */}
             <motion.div
               initial="initial"
               whileInView="animate"
               viewport={{ once: true }}
               variants={fadeIn}
-              className="flex flex-col items-center"
+              className="flex flex-col justify-center"
             >
-              <div className="relative w-48 h-48 mb-6 rounded-full overflow-hidden border-4 border-brand-blue shadow-lg">
-                <Image
-                  src="/images/faeem-lashkaria.jpg"
-                  alt="Mo. Faeem Lashkaria"
-                  fill
-                  className="object-cover"
-                  priority
-                />
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">
+                <span className="text-brand-blue">AI-SEO</span> Expertise
+              </h3>
+              <div className="space-y-4">
+                <div className="flex items-start space-x-3">
+                  <div className="w-2 h-2 bg-brand-blue rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900">AI-Optimized Content</h4>
+                    <p className="text-gray-600 text-sm">Creating content that ranks in both traditional search and AI answer engines</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <div className="w-2 h-2 bg-brand-turquoise rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900">LLM Optimization</h4>
+                    <p className="text-gray-600 text-sm">Optimizing for ChatGPT ranking and Google Search Experience</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <div className="w-2 h-2 bg-brand-red rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900">Technical Excellence</h4>
+                    <p className="text-gray-600 text-sm">Deep expertise in website development and SEO since 2014</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <div className="w-2 h-2 bg-brand-yellow rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900">Results-Driven Approach</h4>
+                    <p className="text-gray-600 text-sm">Proven track record of 300%+ organic traffic growth for clients</p>
+                  </div>
+                </div>
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Mo. Faeem Lashkaria</h3>
-              <p className="text-brand-turquoise font-semibold mb-4">Co-founder & Technical Lead</p>
-              <p className="text-gray-600 text-center max-w-md">
-                With nearly a decade of experience in website development and SEO since 2014,
-                Faeem brings technical excellence and deep understanding of search engine dynamics
-                to every project.
-              </p>
             </motion.div>
           </div>
         </div>
@@ -123,9 +140,9 @@ export default function AboutPage() {
             <p className="mt-6 text-lg leading-8 text-gray-600">
               Founded in November 2024, Zero to Nine Marketing was born out of a real need. Mohammed Lashkaria 
               noticed a friend struggling to build an online presence for his brand and stepped in to help — 
-              leveraging his experience in digital growth and scaling. Mo. Faeem Lashkaria, has been in website 
-              development and SEO since 2014. Together, they realized their combined skills could help many 
-              businesses succeed online, which led to the creation of the agency.
+              leveraging his experience in digital growth and scaling. With deep expertise in website 
+              development and SEO since 2014, Mohammed realized his skills could help many businesses 
+              succeed online, which led to the creation of the agency.
             </p>
           </div>
           <div>

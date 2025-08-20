@@ -1,6 +1,7 @@
 import { wpClient } from '../../lib/wpClient';
 import { GET_POSTS } from '../../lib/queries';
 import { Metadata } from 'next';
+import Link from 'next/link';
 
 // Revalidate the blog listing periodically so new posts appear without a redeploy
 export const revalidate = 300; // seconds
@@ -89,23 +90,25 @@ export default async function BlogPage() {
           </>
         )}
         {posts.map((post) => (
-          <div className="blog-card" key={post.id}>
-            {post.featuredImage?.node?.sourceUrl && (
-              <img
-                src={post.featuredImage.node.sourceUrl}
-                alt={post.featuredImage.node.altText || post.title}
-                className="blog-card-image"
-                style={{ width: '100%', borderRadius: '1rem 1rem 0 0' }}
-              />
-            )}
-            <div className="blog-meta">
-              <span>{new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
-              {/* Add category and read time if available */}
+          <Link href={`/blog/${post.slug}`} key={post.id} className="blog-card-link">
+            <div className="blog-card">
+              {post.featuredImage?.node?.sourceUrl && (
+                <img
+                  src={post.featuredImage.node.sourceUrl}
+                  alt={post.featuredImage.node.altText || post.title}
+                  className="blog-card-image"
+                  style={{ width: '100%', borderRadius: '1rem 1rem 0 0' }}
+                />
+              )}
+              <div className="blog-meta">
+                <span>{new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                {/* Add category and read time if available */}
+              </div>
+              <div className="blog-title">
+                {post.title}
+              </div>
             </div>
-            <a href={`/blog/${post.slug}`} className="blog-title">
-              {post.title}
-            </a>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

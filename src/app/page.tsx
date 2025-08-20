@@ -19,11 +19,11 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
-                <span className="text-brand-blue">Dominate Search Results</span> <span className="text-gray-900">with Proven SEO</span>
+                <span className="text-brand-blue">Dominate Search Results</span> <span className="text-gray-900">with AI-SEO</span>
               </h1>
               <p className="mt-6 text-lg leading-8 text-gray-600">
-                We've generated 100.8M+ impressions and helped 50+ businesses achieve 300%+ organic traffic growth. 
-                Your success story starts here.
+                Increase relevant traffic to your website and stay ahead of the curve in both traditional and AI-powered search. 
+                We optimize for Google Search Experience, ChatGPT ranking, and emerging AI answer engines.
               </p>
               <div className="mt-10 flex items-center gap-x-6">
                 <Link
@@ -202,7 +202,7 @@ export default function HomePage() {
               Performance Marketing Excellence
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Beyond SEO, we deliver exceptional results through targeted paid advertising campaigns
+              Beyond SEO, we deliver exceptional results through targeted paid advertising campaigns and LLM Optimization
             </p>
           </div>
           
@@ -378,7 +378,7 @@ export default function HomePage() {
               SEO Success Stories
           </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Real results from businesses that transformed their online presence with our SEO strategies
+              Real results from businesses that transformed their online presence with our AI-optimized Content and Google Search Experience Optimization strategies
           </p>
         </div>
 
@@ -591,7 +591,7 @@ export default function HomePage() {
             Ready to Dominate Search Results?
           </h2>
           <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
-            Join 50+ businesses that have transformed their online presence with our proven SEO strategies. 
+            Join 50+ businesses that have transformed their online presence with our AI-SEO strategies. 
             Get started with a free technical SEO audit today.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

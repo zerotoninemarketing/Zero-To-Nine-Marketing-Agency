@@ -60,3 +60,30 @@ export const GET_POST_BY_SLUG = `
     }
   }
 `;
+
+export const GET_POST_SLUGS = `
+  query PostSlugs {
+    posts(first: 50, where: { status: PUBLISH }) {
+      nodes { slug }
+    }
+  }
+`;
+
+export const GET_POST_SEO_BY_SLUG = `
+  query PostSeoBySlug($slug: ID!) {
+    post(id: $slug, idType: SLUG) {
+      title
+      seo {
+        title
+        metaDesc
+        opengraphTitle
+        opengraphDescription
+        opengraphImage { sourceUrl }
+        twitterTitle
+        twitterDescription
+        twitterImage { sourceUrl }
+        canonical
+      }
+    }
+  }
+`;

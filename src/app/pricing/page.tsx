@@ -540,6 +540,10 @@ export default function PricingPage() {
         <div className="space-y-6">
           {[
             {
+              question: "How can I get a free trial?",
+              answer: "We understand that investing in SEO is a long-term commitment, and you want to ensure you're making the right decision. While we cannot offer a full-fledged free trial of our strategy and execution due to the nature of SEO, we're happy to provide you with a sample article to assess the quality of our blog content."
+            },
+            {
               question: "What's included in the 30-day results guarantee?",
               answer: "If you don't see measurable improvements in your organic traffic, keyword rankings, or search visibility within 30 days, we'll provide additional optimization work or offer a refund."
             },
