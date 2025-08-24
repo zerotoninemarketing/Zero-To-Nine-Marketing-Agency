@@ -5,7 +5,6 @@ const nextConfig = {
       allowedOrigins: ['localhost:3000'],
       bodySizeLimit: '2mb',
     },
-    optimizeCss: true, // Optimize CSS
     optimizePackageImports: ['@vercel/analytics', '@vercel/speed-insights'],
   },
   images: {
