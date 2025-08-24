@@ -1,8 +1,9 @@
 // Temporarily disabled for WordPress conversion
 // Blog functionality will be handled by WordPress
 
-import { wpClient } from '../../../lib/wpClient';
+import { cachedRequest } from '../../../lib/wpClient';
 import { GET_POST_BY_SLUG, GET_POST_SLUGS, GET_POST_SEO_BY_SLUG } from '../../../lib/queries';
+import OptimizedImage from '../../../components/OptimizedImage';
 
 // Revalidate individual posts periodically
 export const revalidate = 60; // seconds
@@ -59,7 +60,7 @@ interface PostSeoData {
 
 export async function generateStaticParams() {
   try {
-    const data = await wpClient.request(GET_POST_SLUGS) as { posts: { nodes: { slug: string }[] } };
+    const data = await cachedRequest<{ posts: { nodes: { slug: string }[] } }>(GET_POST_SLUGS);
     return data.posts.nodes.map((n) => ({ slug: n.slug }));
   } catch {
     return [] as { slug: string }[];
@@ -68,7 +69,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   try {
-    const data = await wpClient.request(GET_POST_SEO_BY_SLUG, { slug: params.slug }) as PostSeoData;
+    const data = await cachedRequest<PostSeoData>(GET_POST_SEO_BY_SLUG, { slug: params.slug });
     const post = data.post;
 
     if (!post) {
@@ -107,19 +108,43 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 function enhancePostHtml(html: string): string {
   let transformed = html;
-  // Lazy-load images if not already specified
-  transformed = transformed.replace(/<img\b(?![^>]*\bloading=)[^>]*>/gi, (match) =>
-    match.replace('<img', '<img loading="lazy" decoding="async" fetchpriority="low"')
+  
+  // Optimize images with proper attributes
+  transformed = transformed.replace(
+    /<img\b([^>]*)>/gi,
+    (match, attributes) => {
+      // Add loading="lazy" if not present
+      if (!attributes.includes('loading=')) {
+        attributes += ' loading="lazy"';
+      }
+      // Add decoding="async" if not present
+      if (!attributes.includes('decoding=')) {
+        attributes += ' decoding="async"';
+      }
+      // Add fetchpriority="low" for non-critical images
+      if (!attributes.includes('fetchpriority=')) {
+        attributes += ' fetchpriority="low"';
+      }
+      return `<img${attributes}>`;
+    }
   );
-  // Lazy-load iframes
-  transformed = transformed.replace(/<iframe\b(?![^>]*\bloading=)[^>]*>/gi, (match) =>
-    match.replace('<iframe', '<iframe loading="lazy"')
+  
+  // Optimize iframes
+  transformed = transformed.replace(
+    /<iframe\b([^>]*)>/gi,
+    (match, attributes) => {
+      if (!attributes.includes('loading=')) {
+        attributes += ' loading="lazy"';
+      }
+      return `<iframe${attributes}>`;
+    }
   );
+  
   return transformed;
 }
 
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
-  const data = await wpClient.request(GET_POST_BY_SLUG, { slug: params.slug }) as PostData;
+  const data = await cachedRequest<PostData>(GET_POST_BY_SLUG, { slug: params.slug });
   const post = data.post;
 
   if (!post) return <div>Post not found</div>;
@@ -130,6 +155,19 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
     <div className="blog-post-layout" style={{ display: 'flex', gap: '2rem' }}>
       <main className="blog-main-content" style={{ flex: 3 }}>
         <h1 className="blog-title-h1">{post.title}</h1>
+        
+        {post.featuredImage?.node?.sourceUrl && (
+          <OptimizedImage
+            src={post.featuredImage.node.sourceUrl}
+            alt={post.featuredImage.node.altText || post.title}
+            width={800}
+            height={400}
+            className="mb-6 rounded-lg"
+            priority={true}
+            sizes="(max-width: 768px) 100vw, 800px"
+          />
+        )}
+        
         <div className="blog-content" dangerouslySetInnerHTML={{ __html: optimizedHtml }} />
         <p>
           <em>Published on {new Date(post.date).toLocaleDateString()}</em>
