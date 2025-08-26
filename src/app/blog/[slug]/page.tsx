@@ -1,12 +1,13 @@
 // Temporarily disabled for WordPress conversion
 // Blog functionality will be handled by WordPress
 
-import { cachedRequest } from '../../../lib/wpClient';
-import { GET_POST_BY_SLUG, GET_POST_SLUGS, GET_POST_SEO_BY_SLUG } from '../../../lib/queries';
-import OptimizedImage from '../../../components/OptimizedImage';
+import { wpClient } from '../../../lib/wpClient';
+import { GET_POST_BY_SLUG, GET_POST_SLUGS, GET_POST_SEO_BY_SLUG, GET_POSTS } from '../../../lib/queries';
+import Link from 'next/link';
 
-// Revalidate individual posts periodically
-export const revalidate = 60; // seconds
+// Force dynamic rendering to ensure fresh content
+export const dynamic = 'force-dynamic';
+export const revalidate = 0; // Disable static generation for fresh content
 
 interface PostData {
   post: {
@@ -58,18 +59,35 @@ interface PostSeoData {
   }
 }
 
-export async function generateStaticParams() {
-  try {
-    const data = await cachedRequest<{ posts: { nodes: { slug: string }[] } }>(GET_POST_SLUGS);
-    return data.posts.nodes.map((n) => ({ slug: n.slug }));
-  } catch {
-    return [] as { slug: string }[];
+interface RecentPost {
+  id: string;
+  title: string;
+  slug: string;
+  date: string;
+  featuredImage?: {
+    node: {
+      sourceUrl: string;
+      altText: string;
+    }
   }
 }
 
+// Remove static generation since we're using dynamic rendering
+// export async function generateStaticParams() {
+//   try {
+//     const data = await wpClient.request(GET_POST_SLUGS) as { posts: { nodes: { slug: string }[] } };
+//     return data.posts.nodes.map((n) => ({ slug: n.slug }));
+//   } catch {
+//     return [] as { slug: string }[];
+//   }
+// }
+
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   try {
-    const data = await cachedRequest<PostSeoData>(GET_POST_SEO_BY_SLUG, { slug: params.slug });
+    const data = await wpClient.request(GET_POST_SEO_BY_SLUG, { slug: params.slug }, {
+      'Cache-Control': 'no-cache',
+      'X-Request-Time': Date.now().toString()
+    }) as PostSeoData;
     const post = data.post;
 
     if (!post) {
@@ -108,75 +126,93 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 function enhancePostHtml(html: string): string {
   let transformed = html;
-  
-  // Optimize images with proper attributes
-  transformed = transformed.replace(
-    /<img\b([^>]*)>/gi,
-    (match, attributes) => {
-      // Add loading="lazy" if not present
-      if (!attributes.includes('loading=')) {
-        attributes += ' loading="lazy"';
-      }
-      // Add decoding="async" if not present
-      if (!attributes.includes('decoding=')) {
-        attributes += ' decoding="async"';
-      }
-      // Add fetchpriority="low" for non-critical images
-      if (!attributes.includes('fetchpriority=')) {
-        attributes += ' fetchpriority="low"';
-      }
-      return `<img${attributes}>`;
-    }
+  // Lazy-load images if not already specified
+  transformed = transformed.replace(/<img\b(?![^>]*\bloading=)[^>]*>/gi, (match) =>
+    match.replace('<img', '<img loading="lazy" decoding="async" fetchpriority="low"')
   );
-  
-  // Optimize iframes
-  transformed = transformed.replace(
-    /<iframe\b([^>]*)>/gi,
-    (match, attributes) => {
-      if (!attributes.includes('loading=')) {
-        attributes += ' loading="lazy"';
-      }
-      return `<iframe${attributes}>`;
-    }
+  // Lazy-load iframes
+  transformed = transformed.replace(/<iframe\b(?![^>]*\bloading=)[^>]*>/gi, (match) =>
+    match.replace('<iframe', '<iframe loading="lazy"')
   );
-  
   return transformed;
 }
 
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
-  const data = await cachedRequest<PostData>(GET_POST_BY_SLUG, { slug: params.slug });
-  const post = data.post;
+  try {
+    // Add timestamp to prevent caching
+    const [postData, recentPostsData] = await Promise.all([
+      wpClient.request(GET_POST_BY_SLUG, { slug: params.slug }, {
+        'Cache-Control': 'no-cache',
+        'X-Request-Time': Date.now().toString()
+      }) as Promise<PostData>,
+      wpClient.request(GET_POSTS, {}, {
+        'Cache-Control': 'no-cache',
+        'X-Request-Time': Date.now().toString()
+      }) as Promise<{ posts: { nodes: RecentPost[] } }>
+    ]);
 
-  if (!post) return <div>Post not found</div>;
+    const post = postData.post;
+    const recentPosts = recentPostsData.posts.nodes;
 
-  const optimizedHtml = enhancePostHtml(post.content);
+    if (!post) return <div>Post not found</div>;
+
+    // Filter out the current post from recent posts and take first 5
+    const filteredRecentPosts = recentPosts
+      .filter(recentPost => recentPost.slug !== params.slug)
+      .slice(0, 5);
+
+    const optimizedHtml = enhancePostHtml(post.content);
 
   return (
-    <div className="blog-post-layout" style={{ display: 'flex', gap: '2rem' }}>
-      <main className="blog-main-content" style={{ flex: 3 }}>
-        <h1 className="blog-title-h1">{post.title}</h1>
-        
-        {post.featuredImage?.node?.sourceUrl && (
-          <OptimizedImage
-            src={post.featuredImage.node.sourceUrl}
-            alt={post.featuredImage.node.altText || post.title}
-            width={800}
-            height={400}
-            className="mb-6 rounded-lg"
-            priority={true}
-            sizes="(max-width: 768px) 100vw, 800px"
-          />
-        )}
-        
-        <div className="blog-content" dangerouslySetInnerHTML={{ __html: optimizedHtml }} />
-        <p>
-          <em>Published on {new Date(post.date).toLocaleDateString()}</em>
-        </p>
-      </main>
-      <aside style={{ flex: 1, background: '#f5f7fa', borderRadius: '1rem', padding: '2rem' }}>
-        {/* Sidebar content or ads here */}
-        <p>Ad space or widgets</p>
+      <div className="blog-layout">
+        <div className="blog-container">
+          <main className="blog-main">
+            <h1 className="blog-title-h1">{post.title}</h1>
+            <div className="blog-content" dangerouslySetInnerHTML={{ __html: optimizedHtml }} />
+            <p>
+              <em>Published on {new Date(post.date).toLocaleDateString()}</em>
+            </p>
+          </main>
+          <aside className="blog-sidebar">
+            <div className="sidebar-widget">
+              <h3>Ad Space</h3>
+              <div className="sidebar-content">
+                <p>Advertisement or widget content can go here.</p>
+              </div>
+            </div>
+            <div className="sidebar-widget">
+              <h3>Recent Posts</h3>
+              <div className="sidebar-content">
+                {filteredRecentPosts.length > 0 ? (
+                  <div className="recent-posts-list">
+                    {filteredRecentPosts.map((recentPost) => (
+                      <Link 
+                        href={`/blog/${recentPost.slug}`} 
+                        key={recentPost.id}
+                        className="recent-post-item"
+                      >
+                        <div className="recent-post-title">{recentPost.title}</div>
+                        <div className="recent-post-date">
+                          {new Date(recentPost.date).toLocaleDateString('en-US', { 
+                            month: 'short', 
+                            day: 'numeric', 
+                            year: 'numeric' 
+                          })}
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                ) : (
+                  <p>No recent posts available.</p>
+                )}
+              </div>
+            </div>
       </aside>
-    </div>
+        </div>
+      </div>
   );
+  } catch (error) {
+    console.error('Error fetching blog data:', error);
+    return <div>Error loading blog post</div>;
+  }
 }

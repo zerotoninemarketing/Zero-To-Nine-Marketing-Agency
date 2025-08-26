@@ -1,11 +1,11 @@
-import { cachedRequest } from '../../lib/wpClient';
-import { GET_POSTS_MINIMAL } from '../../lib/queries';
+import { wpClient } from '../../lib/wpClient';
+import { GET_POSTS } from '../../lib/queries';
 import { Metadata } from 'next';
 import Link from 'next/link';
-import OptimizedImage from '../../components/OptimizedImage';
 
-// Revalidate the blog listing periodically so new posts appear without a redeploy
-export const revalidate = 300; // seconds
+// Force dynamic rendering to ensure fresh content
+export const dynamic = 'force-dynamic';
+export const revalidate = 0; // Disable static generation for fresh content
 
 interface PostNode {
   id: string;
@@ -21,6 +21,11 @@ interface PostNode {
   seo?: {
     title: string;
     metaDesc: string;
+    opengraphTitle: string;
+    opengraphDescription: string;
+    opengraphImage?: {
+      sourceUrl: string;
+    }
   }
 }
 
@@ -50,7 +55,11 @@ export default async function BlogPage() {
   let errorInfo = null;
 
   try {
-    const data = await cachedRequest<PostsData>(GET_POSTS_MINIMAL);
+    // Add timestamp to prevent caching
+    const data = await wpClient.request(GET_POSTS, {}, {
+      'Cache-Control': 'no-cache',
+      'X-Request-Time': Date.now().toString()
+    }) as { posts: { nodes: PostNode[] } };
     posts = data.posts.nodes;
   } catch (error: any) {
     errorInfo = {
@@ -85,22 +94,20 @@ export default async function BlogPage() {
             <div className="blog-card coming-soon">Coming Soon</div>
           </>
         )}
-        {posts.map((post, index) => (
+        {posts.map((post) => (
           <Link href={`/blog/${post.slug}`} key={post.id} className="blog-card-link">
             <div className="blog-card">
               {post.featuredImage?.node?.sourceUrl && (
-                <OptimizedImage
+                <img
                   src={post.featuredImage.node.sourceUrl}
                   alt={post.featuredImage.node.altText || post.title}
-                  width={400}
-                  height={250}
                   className="blog-card-image"
-                  priority={index < 2} // Prioritize first 2 images
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  style={{ width: '100%', borderRadius: '1rem 1rem 0 0' }}
                 />
               )}
               <div className="blog-meta">
                 <span>{new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                {/* Add category and read time if available */}
               </div>
               <div className="blog-title">
                 {post.title}
