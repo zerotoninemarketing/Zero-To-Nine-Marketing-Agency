@@ -5,9 +5,8 @@ import { wpClient } from '../../../lib/wpClient';
 import { GET_POST_BY_SLUG, GET_POST_SLUGS, GET_POST_SEO_BY_SLUG, GET_POSTS } from '../../../lib/queries';
 import Link from 'next/link';
 
-// Force dynamic rendering to ensure fresh content
-export const dynamic = 'force-dynamic';
-export const revalidate = 0; // Disable static generation for fresh content
+// Smart caching: 3-minute revalidation for fresh content while maintaining performance
+export const revalidate = 180; // 3 minutes - good balance of performance and freshness
 
 interface PostData {
   post: {
@@ -72,22 +71,18 @@ interface RecentPost {
   }
 }
 
-// Remove static generation since we're using dynamic rendering
-// export async function generateStaticParams() {
-//   try {
-//     const data = await wpClient.request(GET_POST_SLUGS) as { posts: { nodes: { slug: string }[] } };
-//     return data.posts.nodes.map((n) => ({ slug: n.slug }));
-//   } catch {
-//     return [] as { slug: string }[];
-//   }
-// }
+export async function generateStaticParams() {
+  try {
+    const data = await wpClient.request(GET_POST_SLUGS) as { posts: { nodes: { slug: string }[] } };
+    return data.posts.nodes.map((n) => ({ slug: n.slug }));
+  } catch {
+    return [] as { slug: string }[];
+  }
+}
 
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   try {
-    const data = await wpClient.request(GET_POST_SEO_BY_SLUG, { slug: params.slug }, {
-      'Cache-Control': 'no-cache',
-      'X-Request-Time': Date.now().toString()
-    }) as PostSeoData;
+    const data = await wpClient.request(GET_POST_SEO_BY_SLUG, { slug: params.slug }) as PostSeoData;
     const post = data.post;
 
     if (!post) {
@@ -139,16 +134,9 @@ function enhancePostHtml(html: string): string {
 
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
   try {
-    // Add timestamp to prevent caching
     const [postData, recentPostsData] = await Promise.all([
-      wpClient.request(GET_POST_BY_SLUG, { slug: params.slug }, {
-        'Cache-Control': 'no-cache',
-        'X-Request-Time': Date.now().toString()
-      }) as Promise<PostData>,
-      wpClient.request(GET_POSTS, {}, {
-        'Cache-Control': 'no-cache',
-        'X-Request-Time': Date.now().toString()
-      }) as Promise<{ posts: { nodes: RecentPost[] } }>
+      wpClient.request(GET_POST_BY_SLUG, { slug: params.slug }) as Promise<PostData>,
+      wpClient.request(GET_POSTS) as Promise<{ posts: { nodes: RecentPost[] } }>
     ]);
 
     const post = postData.post;

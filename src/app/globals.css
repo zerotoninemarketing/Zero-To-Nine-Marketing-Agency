@@ -94,12 +94,12 @@
   }
   
   .sidebar-widget {
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 24px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  }
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
   
   .sidebar-widget h3 {
     font-size: 18px;
@@ -259,6 +259,35 @@
   margin: 1.2rem 0;
   line-height: 1.7;
   color: #222;
+}
+
+/* Fix bullet points and lists */
+.blog-content ul,
+.blog-content ol {
+  margin: 1.2rem 0;
+  padding-left: 2rem;
+}
+
+.blog-content li {
+  margin: 0.5rem 0;
+  line-height: 1.6;
+  color: #222;
+}
+
+.blog-content ul li {
+  list-style-type: disc;
+}
+
+.blog-content ol li {
+  list-style-type: decimal;
+}
+
+.blog-content ul ul,
+.blog-content ol ol,
+.blog-content ul ol,
+.blog-content ol ul {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
 }
 
 @media (min-width: 1024px) {

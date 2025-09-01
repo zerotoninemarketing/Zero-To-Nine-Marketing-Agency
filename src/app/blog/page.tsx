@@ -3,9 +3,8 @@ import { GET_POSTS } from '../../lib/queries';
 import { Metadata } from 'next';
 import Link from 'next/link';
 
-// Force dynamic rendering to ensure fresh content
-export const dynamic = 'force-dynamic';
-export const revalidate = 0; // Disable static generation for fresh content
+// Smart caching: 3-minute revalidation for fresh content while maintaining performance
+export const revalidate = 180; // 3 minutes - good balance of performance and freshness
 
 interface PostNode {
   id: string;
@@ -55,11 +54,7 @@ export default async function BlogPage() {
   let errorInfo = null;
 
   try {
-    // Add timestamp to prevent caching
-    const data = await wpClient.request(GET_POSTS, {}, {
-      'Cache-Control': 'no-cache',
-      'X-Request-Time': Date.now().toString()
-    }) as { posts: { nodes: PostNode[] } };
+    const data = await wpClient.request(GET_POSTS) as { posts: { nodes: PostNode[] } };
     posts = data.posts.nodes;
   } catch (error: any) {
     errorInfo = {
