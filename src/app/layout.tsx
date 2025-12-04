@@ -56,6 +56,24 @@ export default function RootLayout({
                 src="https://www.facebook.com/tr?id=750531040973198&ev=PageView&noscript=1"
             />
         </noscript>
+        
+        {/* Google Analytics 4 */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-86G6QC8KER"
+          strategy="afterInteractive"
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-86G6QC8KER');
+            `,
+          }}
+        />
         <div className="min-h-screen flex flex-col">
           <Navbar />
           <main className="flex-grow">
