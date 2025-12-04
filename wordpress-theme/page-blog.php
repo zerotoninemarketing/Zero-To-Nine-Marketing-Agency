@@ -22,13 +22,16 @@ get_header(); ?>
     <section class="py-16 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <?php
+            $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
             $blog_posts = new WP_Query(array(
                 'post_type' => 'post',
-                'posts_per_page' => -1, // Show ALL posts, no limit
+                'posts_per_page' => 30, // Match WordPress Reading Settings
+                'paged' => $paged,
                 'post_status' => 'publish',
-                'ignore_sticky_posts' => true, // Don't let sticky posts affect the count
+                'ignore_sticky_posts' => true,
                 'orderby' => 'date',
-                'order' => 'DESC'
+                'order' => 'DESC',
+                'no_found_rows' => false // Enable proper pagination
             ));
             
             if ($blog_posts->have_posts()):

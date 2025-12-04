@@ -435,4 +435,16 @@ function ztn_default_mobile_menu() {
     echo '<li><a href="' . home_url('/contact') . '" class="block px-3 py-2 text-gray-700 hover:text-brand-blue transition-colors">Contact</a></li>';
     echo '</ul>';
 }
+
+/**
+ * Ensure blog page shows all posts - override any WordPress reading settings
+ */
+function ztn_blog_query_override($query) {
+    // Only affect the main query on blog page template
+    if (!is_admin() && is_page_template('page-blog.php') && $query->is_main_query()) {
+        $query->set('posts_per_page', -1);
+        $query->set('nopaging', true);
+    }
+}
+add_action('pre_get_posts', 'ztn_blog_query_override');
 ?>

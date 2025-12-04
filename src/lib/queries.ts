@@ -1,6 +1,6 @@
 export const GET_POSTS = `
   query AllPosts {
-    posts {
+    posts(first: 100, where: { status: PUBLISH }) {
       nodes {
         id
         title
