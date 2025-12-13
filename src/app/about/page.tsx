@@ -73,7 +73,7 @@ export default function AboutPage() {
               <p className="text-brand-blue font-semibold mb-4">CEO & Founder</p>
               <p className="text-gray-600 text-center max-w-md">
                 A visionary leader with extensive experience in digital growth and scaling businesses.
-                Mohammed's expertise in strategic marketing and AI-SEO has helped numerous businesses achieve 
+                Mohammed&apos;s expertise in strategic marketing and AI-SEO has helped numerous businesses achieve 
                 remarkable online success.
               </p>
             </motion.div>
@@ -152,7 +152,7 @@ export default function AboutPage() {
             <p className="mt-6 text-lg leading-8 text-gray-600">
               At Zero to Nine Marketing, we focus on delivering high-quality work backed by smart automation. 
               What sets us apart is our results-driven and personalized approach. Every business is different — 
-              so we don't follow templates. We craft unique strategies tailored to each client's goals, helping 
+              so we don&apos;t follow templates. We craft unique strategies tailored to each client&apos;s goals, helping 
               them scale by increasing sales, onboarding new clients, and freeing up their time to focus on 
               innovation and product development.
             </p>
@@ -232,7 +232,7 @@ export default function AboutPage() {
             <span className="text-brand-red">Our</span> Culture
           </h2>
           <p className="text-lg leading-8 text-gray-600">
-            We're a small, focused, and transparent team that's deeply committed to results. What makes us 
+            We&apos;re a small, focused, and transparent team that&apos;s deeply committed to results. What makes us 
             different is our honest approach — we never take on more clients than we can handle, and we never 
             make unrealistic promises just to close a deal. We love working with businesses that bring new 
             ideas to the table, and our team brings energy, strategy, and genuine excitement to every project 
@@ -273,7 +273,7 @@ export default function AboutPage() {
               What Our Clients Say
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Real testimonials from businesses we've helped transform and grow.
+              Real testimonials from businesses we&apos;ve helped transform and grow.
             </p>
           </motion.div>
 
@@ -336,7 +336,7 @@ export default function AboutPage() {
                 </div>
                 
                 <blockquote className="text-gray-600 italic mb-6 leading-relaxed">
-                  "{testimonial.content}"
+                  &ldquo;{testimonial.content}&rdquo;
                 </blockquote>
                 
                 <div className="border-t pt-4">
@@ -408,8 +408,8 @@ export default function AboutPage() {
           className="text-center"
         >
           <blockquote className="text-2xl font-medium italic text-gray-900 max-w-3xl mx-auto">
-            "We're not just marketers — we're growth partners. From strategy to execution, we help businesses 
-            turn ideas into impact, and ambition into achievement."
+            &quot;We&apos;re not just marketers — we&apos;re growth partners. From strategy to execution, we help businesses 
+            turn ideas into impact, and ambition into achievement.&quot;
           </blockquote>
           <p className="mt-6 text-lg font-semibold text-brand-blue">— Mohammed Lashkaria, CEO & Co-founder</p>
         </motion.div>

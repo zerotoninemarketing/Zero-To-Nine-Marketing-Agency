@@ -9,10 +9,10 @@ export default function ContactPage() {
           <p className="mt-2 text-lg text-gray-600">Get in touch with our team</p>
           <div className="mt-4">
             <a 
-              href="mailto:zerotoninemarketing@gmail.com"
+              href="mailto:contact@zerotoninemarketing.com"
               className="text-blue-600 hover:text-blue-800 font-medium"
             >
-              zerotoninemarketing@gmail.com
+              contact@zerotoninemarketing.com
             </a>
           </div>
         </div>

@@ -15,7 +15,7 @@ export default function CaseStudiesPage() {
               <span className="text-blue-600">Case</span> Studies
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600">
-              Real results from real businesses. See how we've helped companies across the UAE 
+              Real results from real businesses. See how we&apos;ve helped companies across the UAE 
               achieve remarkable growth through strategic digital marketing.
             </p>
           </div>
@@ -233,7 +233,7 @@ export default function CaseStudiesPage() {
                 {/* Testimonial */}
                 <div className="bg-gray-50 rounded-lg p-6">
                   <blockquote className="text-gray-600 italic mb-4">
-                    "{caseStudy.testimonial.content}"
+                    &ldquo;{caseStudy.testimonial.content}&rdquo;
                   </blockquote>
                   <div className="flex items-center">
                     <div className="w-10 h-10 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold">
@@ -257,7 +257,7 @@ export default function CaseStudiesPage() {
           <div className="text-center">
             <h2 className="text-3xl font-bold mb-8">Ready to Achieve Similar Results?</h2>
             <p className="text-xl mb-10 max-w-2xl mx-auto">
-              Let's discuss how we can help your business grow and achieve remarkable results like these.
+              Let&apos;s discuss how we can help your business grow and achieve remarkable results like these.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link

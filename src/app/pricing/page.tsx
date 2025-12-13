@@ -1,4 +1,76 @@
+'use client'
+
 import Link from 'next/link'
+import { useState } from 'react'
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline'
+
+const faqs = [
+  {
+    question: "How can I get a free trial?",
+    answer: "We understand that investing in SEO is a long-term commitment, and you want to ensure you're making the right decision. While we cannot offer a full-fledged free trial of our strategy and execution due to the nature of SEO, we're happy to provide you with a sample article to assess the quality of our blog content."
+  },
+  {
+    question: "What's included in the 30-day results guarantee?",
+    answer: "If you don't see measurable improvements in your organic traffic, keyword rankings, or search visibility within 30 days, we'll provide additional optimization work or offer a refund."
+  },
+  {
+    question: "How long does it take to see SEO results?",
+    answer: "While some improvements can be seen within 30-60 days, significant SEO results typically take 3-6 months. We provide regular reporting to track progress throughout the process."
+  },
+  {
+    question: "Do you work with international businesses?",
+    answer: "Yes, we work with businesses worldwide. Our SEO & GEO strategies are tailored to target specific markets and can include international SEO optimization."
+  },
+  {
+    question: "What is GEO optimization and how does it differ from traditional SEO?",
+    answer: "GEO (Generative Engine Optimization) focuses on optimizing your content to rank in AI-powered search engines like ChatGPT, Perplexity, and Gemini. While traditional SEO helps you rank in Google search, GEO optimization ensures your brand appears as the #1 answer in AI search engines. This dual approach maximizes your visibility across both traditional search and emerging AI-powered search platforms."
+  },
+  {
+    question: "How do you track GEO rankings and performance?",
+    answer: "We track GEO performance through specialized monitoring tools that measure your visibility in AI search engines like ChatGPT, Perplexity, and Gemini. Our monthly, bi-weekly, or weekly reports (depending on your plan) include GEO ranking data, AI search impressions, and query-specific metrics to show how your brand performs across different AI search platforms."
+  },
+  {
+    question: "Can I cancel my subscription anytime?",
+    answer: "Yes, you can cancel your subscription at any time. There are no long-term contracts or cancellation fees. Enterprise clients also have the option for flexible pricing adjustments after the initial setup period."
+  },
+  {
+    question: "What industries do you specialize in?",
+    answer: "We have experience across 15+ industries including e-commerce, B2B, SaaS, local businesses, healthcare, and more. Our strategies are customized for each industry's unique needs."
+  }
+]
+
+function FAQSection() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
+
+  const toggleFAQ = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index)
+  }
+
+  return (
+    <div className="space-y-4">
+      {faqs.map((faq, index) => (
+        <div key={index} className="bg-white rounded-lg shadow-sm overflow-hidden">
+          <button
+            onClick={() => toggleFAQ(index)}
+            className="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors"
+          >
+            <h3 className="text-lg font-semibold text-gray-900 pr-4">{faq.question}</h3>
+            {openIndex === index ? (
+              <ChevronUpIcon className="w-5 h-5 text-gray-500 flex-shrink-0" />
+            ) : (
+              <ChevronDownIcon className="w-5 h-5 text-gray-500 flex-shrink-0" />
+            )}
+          </button>
+          {openIndex === index && (
+            <div className="px-6 pb-6">
+              <p className="text-gray-600">{faq.answer}</p>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  )
+}
 
 export default function PricingPage() {
   return (
@@ -8,11 +80,11 @@ export default function PricingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Transparent SEO Pricing
+              Transparent SEO & GEO Pricing
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Choose the perfect SEO plan for your business. All plans include content creation, 
-              technical optimization, and backlink building with proven results.
+              Choose the plan that fits your business needs. All plans include content creation, optimization, and
+              backlink building with SEO & GEO metrics tracking. Flexible pricing available after initial setup.
             </p>
           </div>
         </div>
@@ -25,7 +97,7 @@ export default function PricingPage() {
           <div className="bg-white rounded-xl shadow-lg p-8 border-2 border-gray-200">
             <div className="text-center mb-8">
               <h3 className="text-2xl font-bold text-gray-900 mb-2">Starter</h3>
-              <div className="text-5xl font-bold text-gray-900 mb-2">$550</div>
+              <div className="text-5xl font-bold text-gray-900 mb-2">$549</div>
               <div className="text-gray-600 mb-6">per month</div>
               <p className="text-sm text-gray-500">Perfect for small businesses and startups</p>
             </div>
@@ -38,7 +110,7 @@ export default function PricingPage() {
                     <svg className="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    15 Content Pages per month
+                    15 Content Pages (SEO & GEO Optimized) per month
                   </li>
                   <li className="flex items-center">
                     <svg className="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -104,7 +176,7 @@ export default function PricingPage() {
                     <svg className="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Monthly performance reports
+                    Monthly SEO & GEO Ranking Reports
                   </li>
                   <li className="flex items-center">
                     <svg className="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -133,7 +205,7 @@ export default function PricingPage() {
 
             <div className="text-center mb-8">
               <h3 className="text-2xl font-bold text-gray-900 mb-2">Growth</h3>
-              <div className="text-5xl font-bold text-gray-900 mb-2">$850</div>
+              <div className="text-5xl font-bold text-gray-900 mb-2">$849</div>
               <div className="text-gray-600 mb-6">per month</div>
               <p className="text-sm text-gray-500">Ideal for growing businesses</p>
             </div>
@@ -146,7 +218,7 @@ export default function PricingPage() {
                     <svg className="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    25 Content Pages per month
+                    30 Content Pages (SEO & GEO Optimized) per month
                   </li>
                   <li className="flex items-center">
                     <svg className="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -230,7 +302,7 @@ export default function PricingPage() {
                     <svg className="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Bi-weekly performance reports
+                    Bi-weekly SEO & GEO Rankings
                   </li>
                   <li className="flex items-center">
                     <svg className="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -272,7 +344,7 @@ export default function PricingPage() {
                     <svg className="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    50 Content Pages per month
+                    Unlimited Content Pages (SEO & GEO Optimized)
                   </li>
                   <li className="flex items-center">
                     <svg className="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -356,19 +428,25 @@ export default function PricingPage() {
                     <svg className="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Dedicated SEO manager
+                    Dedicated SEO & GEO Manager
                   </li>
                   <li className="flex items-center">
                     <svg className="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Weekly performance reports
+                    Weekly SEO & GEO Reporting
                   </li>
                   <li className="flex items-center">
                     <svg className="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     Priority support access
+                  </li>
+                  <li className="flex items-center">
+                    <svg className="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    Flexible Pricing After Setup
                   </li>
                 </ul>
               </div>
@@ -402,16 +480,22 @@ export default function PricingPage() {
               </thead>
               <tbody className="divide-y divide-gray-200">
                 <tr>
-                  <td className="px-6 py-4 text-sm text-gray-900">Content Pages</td>
+                  <td className="px-6 py-4 text-sm text-gray-900">Content Pages (SEO & GEO Optimized)</td>
                   <td className="px-6 py-4 text-center text-sm text-gray-600">15/month</td>
-                  <td className="px-6 py-4 text-center text-sm text-gray-600">25/month</td>
-                  <td className="px-6 py-4 text-center text-sm text-gray-600">50/month</td>
+                  <td className="px-6 py-4 text-center text-sm text-gray-600">30/month</td>
+                  <td className="px-6 py-4 text-center text-sm text-gray-600">Unlimited</td>
                 </tr>
                 <tr>
-                  <td className="px-6 py-4 text-sm text-gray-900">Technical SEO Audit</td>
+                  <td className="px-6 py-4 text-sm text-gray-900">SEO & GEO Technical Audit</td>
                   <td className="px-6 py-4 text-center text-sm text-gray-600">Basic</td>
                   <td className="px-6 py-4 text-center text-sm text-gray-600">Comprehensive</td>
                   <td className="px-6 py-4 text-center text-sm text-gray-600">Enterprise</td>
+                </tr>
+                <tr>
+                  <td className="px-6 py-4 text-sm text-gray-900">AI Search Optimization</td>
+                  <td className="px-6 py-4 text-center text-sm text-gray-600">ChatGPT + Perplexity</td>
+                  <td className="px-6 py-4 text-center text-sm text-gray-600">Full AI Ecosystem</td>
+                  <td className="px-6 py-4 text-center text-sm text-gray-600">Complete Dominance</td>
                 </tr>
                 <tr>
                   <td className="px-6 py-4 text-sm text-gray-900">Backlink Building</td>
@@ -420,21 +504,27 @@ export default function PricingPage() {
                   <td className="px-6 py-4 text-center text-sm text-gray-600">Premium</td>
                 </tr>
                 <tr>
-                  <td className="px-6 py-4 text-sm text-gray-900">Reporting Frequency</td>
+                  <td className="px-6 py-4 text-sm text-gray-900">SEO & GEO Reporting Frequency</td>
                   <td className="px-6 py-4 text-center text-sm text-gray-600">Monthly</td>
                   <td className="px-6 py-4 text-center text-sm text-gray-600">Bi-weekly</td>
                   <td className="px-6 py-4 text-center text-sm text-gray-600">Weekly</td>
                 </tr>
                 <tr>
-                  <td className="px-6 py-4 text-sm text-gray-900">Dedicated Manager</td>
+                  <td className="px-6 py-4 text-sm text-gray-900">Dedicated SEO & GEO Manager</td>
                   <td className="px-6 py-4 text-center text-sm text-gray-600">-</td>
                   <td className="px-6 py-4 text-center text-sm text-gray-600">-</td>
                   <td className="px-6 py-4 text-center text-sm text-gray-600">✓</td>
                 </tr>
                 <tr>
-                  <td className="px-6 py-4 text-sm text-gray-900">Competitor Analysis</td>
+                  <td className="px-6 py-4 text-sm text-gray-900">GEO Ranking Analysis</td>
                   <td className="px-6 py-4 text-center text-sm text-gray-600">-</td>
                   <td className="px-6 py-4 text-center text-sm text-gray-600">✓</td>
+                  <td className="px-6 py-4 text-center text-sm text-gray-600">✓</td>
+                </tr>
+                <tr>
+                  <td className="px-6 py-4 text-sm text-gray-900">Flexible Pricing After Setup</td>
+                  <td className="px-6 py-4 text-center text-sm text-gray-600">-</td>
+                  <td className="px-6 py-4 text-center text-sm text-gray-600">-</td>
                   <td className="px-6 py-4 text-center text-sm text-gray-600">✓</td>
                 </tr>
               </tbody>
@@ -465,8 +555,8 @@ export default function PricingPage() {
                 <tr>
                   <td className="px-6 py-4 text-sm text-gray-900">Pages created per month</td>
                   <td className="px-6 py-4 text-center text-sm text-gray-600">15</td>
-                  <td className="px-6 py-4 text-center text-sm text-gray-600">25</td>
-                  <td className="px-6 py-4 text-center text-sm text-gray-600">50</td>
+                  <td className="px-6 py-4 text-center text-sm text-gray-600">30</td>
+                  <td className="px-6 py-4 text-center text-sm text-gray-600">Unlimited</td>
                 </tr>
                 <tr>
                   <td className="px-6 py-4 text-sm text-gray-900">Commitment options</td>
@@ -502,18 +592,19 @@ export default function PricingPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="bg-white rounded-xl shadow-lg p-8">
           <h2 className="text-2xl font-bold text-gray-900 text-center mb-6">Included with Every Plan</h2>
-          <p className="text-gray-600 text-center max-w-3xl mx-auto mb-8">Every engagement comes with the tooling, processes, and support you need to execute and measure SEO effectively.</p>
+          <p className="text-gray-600 text-center max-w-3xl mx-auto mb-8">Every engagement comes with the tooling, processes, and support you need to execute and measure SEO & GEO effectively.</p>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               'Editorial roadmap & keyword mapping',
               'AI‑assisted topic ideation & outlines',
-              'Off‑page SEO & outreach',
+              'Off‑page SEO & GEO outreach',
               'Access to our AI tools',
+              'GEO-optimized content creation',
               'Internal linking across blogs',
               'Publishing & on‑site formatting',
-              'Page‑level KPI tracking',
-              'Fortnightly reports',
+              'SEO & GEO KPI tracking',
+              'Fortnightly SEO & GEO reports',
               'Brand‑aligned visuals',
               'Quarterly traffic projections',
               'Dedicated account team',
@@ -537,60 +628,9 @@ export default function PricingPage() {
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
         </div>
         
-        <div className="space-y-6">
-          {[
-            {
-              question: "How can I get a free trial?",
-              answer: "We understand that investing in SEO is a long-term commitment, and you want to ensure you're making the right decision. While we cannot offer a full-fledged free trial of our strategy and execution due to the nature of SEO, we're happy to provide you with a sample article to assess the quality of our blog content."
-            },
-            {
-              question: "What's included in the 30-day results guarantee?",
-              answer: "If you don't see measurable improvements in your organic traffic, keyword rankings, or search visibility within 30 days, we'll provide additional optimization work or offer a refund."
-            },
-            {
-              question: "How long does it take to see SEO results?",
-              answer: "While some improvements can be seen within 30-60 days, significant SEO results typically take 3-6 months. We provide regular reporting to track progress throughout the process."
-            },
-            {
-              question: "Do you work with international businesses?",
-              answer: "Yes, we work with businesses worldwide. Our SEO strategies are tailored to target specific geographic markets and can include international SEO optimization."
-            },
-            {
-              question: "Can I cancel my subscription anytime?",
-              answer: "Yes, you can cancel your subscription at any time. There are no long-term contracts or cancellation fees."
-            },
-            {
-              question: "What industries do you specialize in?",
-              answer: "We have experience across 15+ industries including e-commerce, B2B, SaaS, local businesses, healthcare, and more. Our strategies are customized for each industry's unique needs."
-            }
-          ].map((faq, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-sm p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">{faq.question}</h3>
-              <p className="text-gray-600">{faq.answer}</p>
-            </div>
-          ))}
-        </div>
+        <FAQSection />
       </div>
 
-      {/* CTA Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">
-            Ready to Dominate Search Results?
-          </h2>
-          <p className="text-xl text-blue-100 mb-8">
-            Get started with a free technical SEO audit and see how we can transform your online presence.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contact" className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-              Get Free SEO Audit
-            </Link>
-            <Link href="/case-studies" className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
-              View Case Studies
-            </Link>
-          </div>
-        </div>
-      </div>
     </div>
   )
 } 

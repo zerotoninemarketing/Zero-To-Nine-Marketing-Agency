@@ -93,11 +93,14 @@ export default async function BlogPage() {
           <Link href={`/blog/${post.slug}`} key={post.id} className="blog-card-link">
             <div className="blog-card">
               {post.featuredImage?.node?.sourceUrl && (
+                // Using img here because sources are remote/variable; add decoding and lazy loading for perf
                 <img
                   src={post.featuredImage.node.sourceUrl}
                   alt={post.featuredImage.node.altText || post.title}
                   className="blog-card-image"
                   style={{ width: '100%', borderRadius: '1rem 1rem 0 0' }}
+                  loading="lazy"
+                  decoding="async"
                 />
               )}
               <div className="blog-meta">

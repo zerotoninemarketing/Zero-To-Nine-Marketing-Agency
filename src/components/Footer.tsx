@@ -6,15 +6,13 @@ const navigation = {
     { name: 'Home', href: '/' },
     { name: 'Services', href: '/services' },
     { name: 'About', href: '/about' },
+    { name: 'Case Studies', href: '/case-studies' },
     { name: 'Audit Tool', href: '/audit' },
     { name: 'Contact', href: '/contact' },
   ],
   services: [
-    { name: 'Performance Marketing', href: '/services/performance-marketing' },
     { name: 'SEO', href: '/services/seo' },
-    { name: 'Content Marketing', href: '/services/content-marketing' },
-    { name: 'Social Media', href: '/services/social-media' },
-    { name: 'Consulting', href: '/services/consulting' },
+    { name: 'Answer Engine Optimization', href: '/services/answerengineoptimization' },
   ],
   social: [
     {
@@ -62,6 +60,15 @@ const navigation = {
             d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 0 1-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 0 1-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 0 1 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418ZM15.194 12 10 15V9l5.194 3Z"
             clipRule="evenodd"
           />
+        </svg>
+      ),
+    },
+    {
+      name: 'YouTube',
+      href: 'https://www.youtube.com/@ZeroToNineMarketing',
+      icon: (props: React.SVGProps<SVGSVGElement>) => (
+        <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
         </svg>
       ),
     },

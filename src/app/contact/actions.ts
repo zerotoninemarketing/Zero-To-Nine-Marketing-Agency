@@ -17,7 +17,7 @@ export async function submitContactForm(formData: ContactFormData) {
     console.log('Form submission:', formData)
     
     // You can add email sending logic here using your preferred email service
-    // Example: Send email to zerotoninemarketing@gmail.com
+    // Example: Send email to contact@zerotoninemarketing.com
     
     // Meta event tracking disabled for WordPress conversion
 
