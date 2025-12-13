@@ -121,7 +121,7 @@ export default function AnswerEngineOptimizationPage() {
                 </div>
                 <div className="bg-white rounded-xl p-6 shadow-lg">
                   <div className="text-2xl font-bold text-pink-600 mb-2">76%</div>
-                  <div className="text-gray-600">of potential customers never see you if you're not in AI results</div>
+                  <div className="text-gray-600">of potential customers never see you if you&apos;re not in AI results</div>
                 </div>
                 <div className="bg-white rounded-xl p-6 shadow-lg">
                   <div className="text-2xl font-bold text-blue-600 mb-2">$847</div>

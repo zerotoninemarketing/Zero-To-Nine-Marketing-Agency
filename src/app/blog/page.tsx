@@ -94,6 +94,7 @@ export default async function BlogPage() {
             <div className="blog-card">
               {post.featuredImage?.node?.sourceUrl && (
                 // Using img here because sources are remote/variable; add decoding and lazy loading for perf
+                // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={post.featuredImage.node.sourceUrl}
                   alt={post.featuredImage.node.altText || post.title}

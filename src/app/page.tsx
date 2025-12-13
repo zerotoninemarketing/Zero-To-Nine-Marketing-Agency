@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useForm, ValidationError } from '@formspree/react'
 import {
   ArrowRight,
@@ -220,11 +221,13 @@ export default function HomePage() {
               <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
                 <div className="space-y-6">
                   <div className="flex items-center space-x-4 bg-white/20 p-4 rounded-lg">
-                    <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center p-2">
-                      <img
+                    <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center p-2 relative">
+                      <Image
                         src="/images/chatgpt-logo.jpg"
                         alt="ChatGPT logo"
-                        className="w-full h-full object-contain"
+                        width={48}
+                        height={48}
+                        className="object-contain"
                       />
                     </div>
                     <div>
@@ -233,11 +236,13 @@ export default function HomePage() {
                     </div>
                   </div>
                   <div className="flex items-center space-x-4 bg-white/20 p-4 rounded-lg">
-                    <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center p-2">
-                      <img
+                    <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center p-2 relative">
+                      <Image
                         src="/images/perplexity-ai-logo.jpg"
                         alt="Perplexity logo"
-                        className="w-full h-full object-contain"
+                        width={48}
+                        height={48}
+                        className="object-contain"
                       />
                     </div>
                     <div>
@@ -246,11 +251,13 @@ export default function HomePage() {
                     </div>
                   </div>
                   <div className="flex items-center space-x-4 bg-white/20 p-4 rounded-lg">
-                    <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center p-2">
-                      <img
+                    <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center p-2 relative">
+                      <Image
                         src="/images/gemini-google-logo.jpg"
                         alt="Gemini logo"
-                        className="w-full h-full object-contain"
+                        width={48}
+                        height={48}
+                        className="object-contain"
                       />
                     </div>
                     <div>
@@ -329,7 +336,8 @@ export default function HomePage() {
           <div className="relative bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-12 shadow-xl">
             <div className="text-center">
               <div className="flex justify-center mb-6">
-                <div className="w-32 h-20 bg-white rounded-lg p-4 shadow-md flex items-center justify-center">
+                <div className="w-32 h-20 bg-white rounded-lg p-4 shadow-md flex items-center justify-center relative">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={results[currentSlide].logo}
                     alt={`${results[currentSlide].client} logo`}
