@@ -1,5 +1,8 @@
 import { MetadataRoute } from 'next'
 
+// Re-generate sitemap at most once per hour so new blog posts appear automatically
+export const revalidate = 3600
+
 // Types for WordPress data
 interface WordPressPost {
   id: string
@@ -24,10 +27,10 @@ async function getBlogPosts(): Promise<WordPressPost[]> {
     // Use require instead of import to avoid TypeScript issues
     const { GraphQLClient } = require('graphql-request')
     const { GET_POSTS } = require('../lib/queries')
-    
+
     const wpClient = new GraphQLClient(process.env.WORDPRESS_API_URL)
-    const data = await wpClient.request(GET_POSTS) as WordPressResponse
-    
+    const data = (await wpClient.request(GET_POSTS)) as WordPressResponse
+
     return data?.posts?.nodes || []
   } catch (error) {
     console.error('Error fetching blog posts for sitemap:', error)
@@ -37,18 +40,20 @@ async function getBlogPosts(): Promise<WordPressPost[]> {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.zerotoninemarketing.com'
-  
+
   // Static routes
   const staticRoutes = [
     '',
     '/about',
     '/services',
+    '/services/seo',
+    '/services/answerengineoptimization',
     '/contact',
     '/audit',
     '/audit-tool',
     '/studio',
     '/thank-you',
-    '/blog', // Add the main blog page
+    '/blog', // main blog page
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
@@ -58,13 +63,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Get blog posts from WordPress
   const blogPosts = await getBlogPosts()
-  
+
   const blogRoutes: MetadataRoute.Sitemap = blogPosts.map((post: WordPressPost) => ({
     url: `${baseUrl}/blog/${post.slug}`,
     lastModified: new Date(post.modified || post.date),
-    changeFrequency: 'weekly' as const, // Changed to weekly since you post 4-6 times per week
+    changeFrequency: 'weekly' as const,
     priority: 0.7,
   }))
 
   return [...staticRoutes, ...blogRoutes]
-} 
+}
